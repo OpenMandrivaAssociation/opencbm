@@ -11,6 +11,7 @@ License: GPL
 Source: http://www.lb.shuttle.de/puffin/cbm4linux/%{name}-%{ver}.tar.bz2
 Patch: http://www.lb.shuttle.de/puffin/cbm4linux/cbm_module.c-suse10.1.diff
 Patch1: opencbm-0.4.0-pic.patch
+Buildroot: %_tmppath/%{name}
 Url: http://www.lb.shuttle.de/puffin/cbm4linux
 BuildRequires: kernel-source
 Requires: dkms-%name = %version

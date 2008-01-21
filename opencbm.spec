@@ -1,19 +1,19 @@
 %define name opencbm
-%define ver 0.4.0
+%define ver 0.4.2a
 %define major 0
 %define libname %mklibname %name %major
 Summary: OPENCBM/CBM4Linux kernel module, runtime libraries and utilities
 Name: %{name}
-Version: 0.4.0
+Version: %ver
 Release: %mkrel 1
 Group: System/Kernel and hardware
 License: GPL
-Source: http://www.lb.shuttle.de/puffin/cbm4linux/%{name}-%{ver}.tar.bz2
-Patch: http://www.lb.shuttle.de/puffin/cbm4linux/cbm_module.c-suse10.1.diff
-Patch1: opencbm-0.4.0-pic.patch
+Source: http://downloads.sourceforge.net/opencbm/%{name}-%{ver}-src.zip
+Patch1: opencbm-0.4.2-pic.patch
 Buildroot: %_tmppath/%{name}
 Url: http://www.lb.shuttle.de/puffin/cbm4linux
 BuildRequires: kernel-source
+BuildRequires: linuxdoc-tools
 Requires: dkms-%name = %version
 
 %description
@@ -57,8 +57,7 @@ included.
 
 
 %prep
-%setup -q
-%patch
+%setup -q -n %name-%version
 %patch1 -p1
 
 %build
@@ -66,6 +65,7 @@ make -f LINUX/Makefile
 
 %install
 rm -rf $RPM_BUILD_ROOT
+mkdir -p %buildroot/%_sysconfdir/udev/rules.d
 make -f LINUX/Makefile install-files \
 	PREFIX=$RPM_BUILD_ROOT/%{_prefix} \
 	BINDIR=$RPM_BUILD_ROOT/%{_bindir} \
@@ -73,6 +73,7 @@ make -f LINUX/Makefile install-files \
 	MANDIR=$RPM_BUILD_ROOT/%{_mandir}/man1 \
 	INFODIR=$RPM_BUILD_ROOT/%{_infodir} \
 	INCDIR=$RPM_BUILD_ROOT/%{_includedir} \
+	UDEV_RULES=%buildroot/%_sysconfdir/udev/rules.d \
 	MODDIR=$RPM_BUILD_ROOT/"`for d in /lib/modules/\`uname -r\`/{extra,misc,kernel/drivers/char}; do test -d $d && echo $d; done | head -n 1`"
 rm -rf %buildroot/lib/modules %buildroot/cbm.ko
 
@@ -102,15 +103,6 @@ EOF
 %postun -n %libname -p /sbin/ldconfig
 
 %post
-if [ -e /dev/cbm ]; then
-	echo "/dev/cbm exists, leaving owner and permissions untouched"
-	ls -l /dev/cbm
-else
-	echo "creating /dev/cbm"
-	mknod -m 660 /dev/cbm c 10 177
-	chown root:users /dev/cbm
-	ls -l /dev/cbm
-fi
 %_install_info %name.info
 
 %postun
@@ -131,6 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc README 
 %doc docs/html docs/*.pdf
+%_sysconfdir/udev/rules.d/*
 %{_bindir}/*
 %{_infodir}/*
 %{_mandir}/man1/*

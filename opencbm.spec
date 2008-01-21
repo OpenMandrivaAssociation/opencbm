@@ -14,6 +14,8 @@ Buildroot: %_tmppath/%{name}
 Url: http://www.lb.shuttle.de/puffin/cbm4linux
 BuildRequires: kernel-source
 BuildRequires: linuxdoc-tools
+#gw sgml2info fails otherwise
+BuildRequires: locales-en
 Requires: dkms-%name = %version
 
 %description

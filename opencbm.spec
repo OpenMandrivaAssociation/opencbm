@@ -5,7 +5,7 @@
 Summary: OPENCBM/CBM4Linux kernel module, runtime libraries and utilities
 Name: %{name}
 Version: %ver
-Release: %mkrel 1
+Release: %mkrel 3
 Group: System/Kernel and hardware
 License: GPL
 Source: http://downloads.sourceforge.net/opencbm/%{name}-%{ver}-src.zip

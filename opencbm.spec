@@ -5,15 +5,16 @@
 Summary: OPENCBM/CBM4Linux kernel module, runtime libraries and utilities
 Name: %{name}
 Version: %ver
-Release: %mkrel 3
+Release: %mkrel 4
 Group: System/Kernel and hardware
 License: GPL
 Source: http://downloads.sourceforge.net/opencbm/%{name}-%{ver}-src.zip
 Patch1: opencbm-0.4.2-pic.patch
 Buildroot: %_tmppath/%{name}
 Url: http://www.lb.shuttle.de/puffin/cbm4linux
-BuildRequires: kernel-source
 BuildRequires: linuxdoc-tools
+BuildRequires: kernel-desktop-devel-latest
+BuildRequires: kernel-desktop-latest
 #gw missing dep in linuxdoc-tools
 BuildRequires: texinfo
 Requires: dkms-%name = %version
@@ -61,9 +62,8 @@ included.
 %prep
 %setup -q -n %name-%version
 %patch1 -p1
-
 %build
-make -f LINUX/Makefile
+make -f LINUX/Makefile KERNEL_SOURCE=$(ls -d /lib/modules/*/build|head -n 1)
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -76,7 +76,7 @@ make -f LINUX/Makefile install-files \
 	INFODIR=$RPM_BUILD_ROOT/%{_infodir} \
 	INCDIR=$RPM_BUILD_ROOT/%{_includedir} \
 	UDEV_RULES=%buildroot/%_sysconfdir/udev/rules.d \
-	MODDIR=$RPM_BUILD_ROOT/"`for d in /lib/modules/\`uname -r\`/{extra,misc,kernel/drivers/char}; do test -d $d && echo $d; done | head -n 1`"
+	MODDIR=$RPM_BUILD_ROOT/"`for d in /lib/modules/*/{extra,misc,kernel/drivers/char}; do test -d $d && echo $d; done | head -n 1`"
 rm -rf %buildroot/lib/modules %buildroot/cbm.ko
 
 mkdir -p %{buildroot}%{_usrsrc}/%name-%version-%release/sys

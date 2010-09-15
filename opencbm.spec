@@ -63,7 +63,11 @@ included.
 
 %prep
 %setup -q -n %name-%version
-%apply_patches
+%patch0 -p1
+%patch1 -p1
+%ifarch x86_64
+%patch2 -p1
+%endif
 
 %build
 make -f LINUX/Makefile KERNEL_SOURCE=$(ls -d /lib/modules/*/build|head -n 1)

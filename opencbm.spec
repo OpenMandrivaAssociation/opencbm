@@ -5,10 +5,11 @@
 Summary: OPENCBM/CBM4Linux kernel module, runtime libraries and utilities
 Name: %{name}
 Version: %ver
-Release: %mkrel 5
+Release: %mkrel 6
 Group: System/Kernel and hardware
-License: GPL
+License: GPLv2+
 Source: http://downloads.sourceforge.net/opencbm/%{name}-%{ver}-src.zip
+Patch0: opencbm-0.4.2a-new-include.patch
 Patch1: opencbm-0.4.2-pic.patch
 Buildroot: %_tmppath/%{name}
 Url: http://www.lb.shuttle.de/puffin/cbm4linux
@@ -61,7 +62,8 @@ included.
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
+%apply_patches
+
 %build
 make -f LINUX/Makefile KERNEL_SOURCE=$(ls -d /lib/modules/*/build|head -n 1)
 

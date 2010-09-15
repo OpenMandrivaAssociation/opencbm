@@ -11,6 +11,7 @@ License: GPLv2+
 Source: http://downloads.sourceforge.net/opencbm/%{name}-%{ver}-src.zip
 Patch0: opencbm-0.4.2a-new-include.patch
 Patch1: opencbm-0.4.2-pic.patch
+Patch2: opencbm-0.4.2a-remove-conflicting-type.patch
 Buildroot: %_tmppath/%{name}
 Url: http://www.lb.shuttle.de/puffin/cbm4linux
 BuildRequires: linuxdoc-tools

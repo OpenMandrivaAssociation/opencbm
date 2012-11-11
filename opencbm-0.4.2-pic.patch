@@ -1,0 +1,13 @@
+--- opencbm-0.4.2a/LINUX/config.make~	2008-01-21 07:23:20.000000000 +0000
++++ opencbm-0.4.2a/LINUX/config.make	2008-01-21 07:23:50.000000000 +0000
+@@ -33,8 +33,8 @@
+ 
+ CFLAGS       = -O2 -Wall
+ ALL_CFLAGS   = -I../include -I../include/LINUX -DOPENCBM_VERSION=$(VERSION) $(CFLAGS)
+-LIB_CFLAGS   = $(ALL_CFLAGS) -D_REENTRANT
+-SHLIB_CFLAGS = $(LIB_CFLAGS) -fPIC
++LIB_CFLAGS   = $(ALL_CFLAGS) -D_REENTRANT -fPIC
++SHLIB_CFLAGS = $(LIB_CFLAGS)
+ LINK_FLAGS   = -L../lib -L../arch/$(ARCH) -lopencbm -larch $(LDFLAGS)
+ SONAME       = -Wl,-soname -Wl,
+ CC           = gcc

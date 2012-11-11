@@ -1,0 +1,11 @@
+diff -p -up opencbm-0.4.2a/sys/linux/cbm_module.c~ opencbm-0.4.2a/sys/linux/cbm_module.c
+--- opencbm-0.4.2a/sys/linux/cbm_module.c~	2010-09-15 11:00:01.000000000 +0200
++++ opencbm-0.4.2a/sys/linux/cbm_module.c	2010-09-15 11:13:43.000000000 +0200
+@@ -215,7 +215,6 @@ static struct wait_queue *cbm_wait_q;
+ static wait_queue_head_t cbm_wait_q;
+ #endif
+ volatile static int eoi;
+-volatile static int irq_count;
+ 
+ #ifndef KERNEL_VERSION
+ # define signal_pending(p) (p->signal & ~p->blocked)

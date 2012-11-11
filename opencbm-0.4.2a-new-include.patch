@@ -1,0 +1,12 @@
+diff -p -up opencbm-0.4.2a/sys/linux/cbm_module.c~ opencbm-0.4.2a/sys/linux/cbm_module.c
+--- opencbm-0.4.2a/sys/linux/cbm_module.c~	2007-11-11 18:16:54.000000000 +0100
++++ opencbm-0.4.2a/sys/linux/cbm_module.c	2010-09-15 09:57:57.000000000 +0200
+@@ -23,7 +23,7 @@ static char *rcsid =
+ #ifdef KERNEL_INCLUDE_OLD_CONFIG_H
+  #include <linux/config.h>
+ #else
+- #include <linux/autoconf.h>
++ #include <generated/autoconf.h>
+ #endif
+ #include <linux/version.h>
+ 
